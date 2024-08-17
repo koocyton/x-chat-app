@@ -30,7 +30,7 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: appBgColor,
       body: EasySidebar(
-        sidebar: ChatSetbar(),
+        sidebar: const ChatSetbar(),
         childBuild: (_context, _sidebarController){
           return Column(
             children:[
@@ -46,7 +46,7 @@ class ChatPage extends StatelessWidget {
                 )
               ),
               Obx(()=>AnimatedContainer(
-                duration: Duration(milliseconds: 100),
+                duration: const Duration(milliseconds: 100),
                 height: chatController.inputSwitch.value ? 148 : 71,
                 child: chatController.inputSwitch.value 
                   ? inputBar(_context) 

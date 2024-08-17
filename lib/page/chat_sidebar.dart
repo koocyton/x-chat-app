@@ -16,14 +16,21 @@ class ChatSetbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: FastBouncingScrollPhysics(),
+      physics: const FastBouncingScrollPhysics(),
       padding: EdgeInsets.fromLTRB(10, appTopHeight + 20, 10, 20),
       children: [
-        oneSet(iconData:Icons.payment_outlined, title:"充值"),
-        oneSet(iconData:Icons.attach_money_outlined, title:"余额"),
-        Divider(color: Colors.black26, height: 1, indent: 10, endIndent: 10),
-        SizedBox(height: 40),
-        oneSet(
+        labelView(
+          iconData:Icons.payment_outlined,
+          title:"充值"
+        ),
+        labelView(
+          iconData:Icons.attach_money_outlined,
+          title:"余额", 
+          extendChild:const Text("0.19 \$")
+        ),
+        const Divider(color: Colors.black12, height: 1, indent: 10, endIndent: 10),
+        const SizedBox(height: 40),
+        labelView(
           iconData:Icons.apps_outlined, 
           title:"插件", 
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -34,19 +41,45 @@ class ChatSetbar extends StatelessWidget {
               width: 20,
               height: 20,
               color: Colors.transparent,
-              child:Icon(Icons.edit_outlined, size:22, color: Colors.grey)
+              child:const Icon(Icons.edit_outlined, size:22, color: Colors.grey)
             )
           )
         ),
-        apps()
+        plugList(),
+        const Divider(color: Colors.black12, height: 1, indent: 10, endIndent: 10),
+        const SizedBox(height: 40),
+        labelView(
+          iconData:Icons.list_outlined, 
+          title:"AI", 
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          extendChild: GestureDetector(
+            onTap: (){
+            },
+            child: Container(
+              width: 20,
+              height: 20,
+              color: Colors.transparent,
+              child:const Icon(Icons.edit_outlined, size:22, color: Colors.grey)
+            )
+          )
+        ),
+        const SizedBox(height: 20),
+        labelView(iconData:Icons.health_and_safety_outlined, title:"OpenAI"),
+        labelView(iconData:Icons.face_2, title:"Grok"),
+        labelView(iconData:Icons.sticky_note_2, title:"天工"),
+        labelView(iconData:Icons.bakery_dining_rounded, title:"文心一言"),
+        labelView(iconData:Icons.follow_the_signs, title:"华为智障"),
+        labelView(iconData:Icons.chat_bubble, title:"腾讯"),
+        labelView(iconData:Icons.attach_money_sharp, title:"蚂蚁"),
+        labelView(iconData:Icons.fax_outlined, title:"FoxShop")
       ],
     );
   }
 
-  Widget oneSet({required IconData iconData,
+  Widget labelView({required IconData iconData,
                 required String title, 
                 Function? onTap, 
-                EdgeInsets padding = const EdgeInsets.fromLTRB(20, 0, 0, 40), 
+                EdgeInsets padding = const EdgeInsets.fromLTRB(20, 0, 20, 40), 
                 Widget extendChild = const SizedBox()}) {
     return GestureDetector(
       onTap: (){
@@ -60,8 +93,8 @@ class ChatSetbar extends StatelessWidget {
         child: Row(
           children: [
             Center(child:Icon(iconData, size:22, color: Colors.black54)),
-            SizedBox(width: 12),
-            Center(child:Text(title, style: TextStyle(color: Colors.black87, fontSize: 14))),
+            const SizedBox(width: 12),
+            Center(child:Text(title, style: const TextStyle(color: Colors.black87, fontSize: 14))),
             Expanded(
               child: Container(
                 alignment: Alignment.centerRight,
@@ -74,35 +107,30 @@ class ChatSetbar extends StatelessWidget {
     );
   }
 
-  Widget apps() {
+  Widget plugList() {
     return GridView(
       shrinkWrap:true,
-      physics: FastBouncingScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(20, 0, 20, 40),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      physics: const FastBouncingScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 1,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
       children:<Widget>[
-        addApp(),
-        oneApp(Icons.ac_unit),
-        oneApp(Icons.airport_shuttle),
-        oneApp(Icons.all_inclusive),
-        oneApp(Icons.beach_access),
-        oneApp(Icons.cake)
+        plugButton(Icons.ac_unit),
+        plugButton(Icons.airport_shuttle),
+        plugButton(Icons.all_inclusive),
+        plugButton(Icons.beach_access),
+        plugButton(Icons.cake),
+        plugButton(Icons.add_outlined, backgroundColor: Colors.grey[200], onTap: (){
+        })
       ]
     );
   }
 
-  Widget addApp() {
-    return oneApp(Icons.add_outlined, backgroundColor: Colors.grey[200], onTap: (){
-    
-    });
-  }
-
-  Widget oneApp(IconData iconData, {Color? backgroundColor, Function? onTap}) {
+  Widget plugButton(IconData iconData, {Color? backgroundColor, Function? onTap}) {
     return GestureDetector(
       onTap: (){
         if (onTap!=null) {
@@ -111,10 +139,10 @@ class ChatSetbar extends StatelessWidget {
       },
       child: Container(
         alignment: Alignment.center,
-        decoration: new BoxDecoration(
-          border: new Border.all(color: Colors.black26, width: 0.5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black26, width: 0.5),
           color: backgroundColor,
-          borderRadius: new BorderRadius.circular((9.0))
+          borderRadius: BorderRadius.circular((9.0))
         ),
         child: Icon(iconData, size:30, color: Colors.black54)
       )
